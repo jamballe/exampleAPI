@@ -1,0 +1,21 @@
+#echo "{}" | sam local invoke ExampleFunction
+#sam local start-api
+#sam package --template-file template.yaml --s3-bucket SOMEBUCKET --output-template-file packaged.yaml
+#sam deploy --template-file packaged.yaml --stack-name exampleAPI --capabilities CAPABILITY_IAM
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: |
+  An example RESTful service
+Resources:
+  ExampleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: index.handler
+      Events:
+        ListCustomers:
+          Type: Api
+          Properties:
+            Path: /
+            Method: any
